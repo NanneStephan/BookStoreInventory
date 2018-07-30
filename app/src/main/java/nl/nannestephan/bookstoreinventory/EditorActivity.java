@@ -138,6 +138,35 @@ public class EditorActivity extends AppCompatActivity implements
             // No need to create ContentValues and no need to do any ContentProvider operations.
             return;
         }
+        if (TextUtils.isEmpty(nameBookString)){
+            Toast.makeText(this, getString(R.string.no_name), Toast.LENGTH_SHORT ).show();
+            return;
+        }
+        if (TextUtils.isEmpty(nameAuthorString)){
+            Toast.makeText(this, getString(R.string.no_author), Toast.LENGTH_SHORT ).show();
+            return;
+        }
+        if (TextUtils.isEmpty(nameCategoryString)){
+            Toast.makeText(this, getString(R.string.no_category), Toast.LENGTH_SHORT ).show();
+            return;
+        }
+        if (TextUtils.isEmpty(priceNumberString)){
+            Toast.makeText(this, getString(R.string.no_price), Toast.LENGTH_SHORT ).show();
+            return;
+        }
+        if (TextUtils.isEmpty(nameSuppliesString)){
+            Toast.makeText(this, getString(R.string.no_supply_name), Toast.LENGTH_SHORT ).show();
+            return;
+        }
+        if (TextUtils.isEmpty(phoneNumberString)){
+            Toast.makeText(this, getString(R.string.no_supply_phone), Toast.LENGTH_SHORT ).show();
+            return;
+        }
+        if (TextUtils.isEmpty(quantityString)){
+            Toast.makeText(this, getString(R.string.no_quantity), Toast.LENGTH_SHORT ).show();
+            return;
+        }
+
         // Create a ContentValues object where column names are the keys,
         // and pet attributes from the editor are the values.
         ContentValues values = new ContentValues();
