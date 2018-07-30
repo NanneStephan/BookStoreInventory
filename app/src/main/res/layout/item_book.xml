@@ -9,8 +9,7 @@
         android:id="@+id/id"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        tools:text="10"
-        />
+        tools:text="10" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,7 +25,7 @@
             android:fontFamily="sans-serif-medium"
             android:textAppearance="?android:textAppearanceMedium"
             android:textColor="#2B3D4D"
-            tools:text="Name Book"/>
+            tools:text="Name Book" />
 
         <TextView
             android:id="@+id/author"
@@ -35,7 +34,7 @@
             android:fontFamily="sans-serif"
             android:textAppearance="?android:textAppearanceSmall"
             android:textColor="#AEB6BD"
-            tools:text="Author"/>
+            tools:text="Author" />
 
         <TextView
             android:id="@+id/category"
@@ -44,47 +43,36 @@
             android:fontFamily="sans-serif"
             android:textAppearance="?android:textAppearanceSmall"
             android:textColor="#AEB6BD"
-            tools:text="Category"/>
+            tools:text="Category" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:layout_weight="1"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-
-            <Button
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:id="@+id/increase_supply"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:background="@drawable/plus_button" />
-
-
             <TextView
                 android:id="@+id/quantity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
+                android:padding="20dp"
                 tools:text="10" />
 
             <Button
+                android:id="@+id/sale_button"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/sale_icon"
                 android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:id="@+id/decrease_supply"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:background="@drawable/remove_button" />
+                android:focusableInTouchMode="false" />
 
         </LinearLayout>
-
     </LinearLayout>
 </LinearLayout>

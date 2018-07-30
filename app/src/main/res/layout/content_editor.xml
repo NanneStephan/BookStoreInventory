@@ -149,5 +149,5 @@
         android:text="@string/Resupply"
         android:layout_margin="10dp"
         android:background="@drawable/resupply_button"
-        android:visibility="visible"/>
+        android:visibility="gone"/>
 </LinearLayout>

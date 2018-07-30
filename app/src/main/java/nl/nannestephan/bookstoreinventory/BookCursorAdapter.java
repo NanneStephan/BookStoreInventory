@@ -59,13 +59,12 @@ public class BookCursorAdapter extends CursorAdapter {
         // Find the Fields to populate
         TextView BookTextView = view.findViewById(R.id.book);
         TextView AuthorTextView = view.findViewById(R.id.author);
-        TextView CategoryTextView = view.findViewById(R.id.category);
-        TextView QuantityTextView = view.findViewById(R.id.quantity);
+        final TextView CategoryTextView = view.findViewById(R.id.category);
+        final TextView QuantityTextView = view.findViewById(R.id.quantity);
         TextView IdTextView = view.findViewById(R.id.id);
 
         //buttons
-        Button IncreaseButton = view.findViewById(R.id.increase_supply);
-        Button DecreaseButton = view.findViewById(R.id.decrease_supply);
+        Button saleButton = view.findViewById(R.id.sale_button);
 
         // get the column
         final int idColumnIndex = cursor.getInt(cursor.getColumnIndex(BookEntry._ID));
@@ -88,32 +87,24 @@ public class BookCursorAdapter extends CursorAdapter {
         QuantityTextView.setText(String.valueOf(quantityColumnIndex));
 
         // buttons
-        IncreaseButton.setOnClickListener(new View.OnClickListener() {
+        saleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Uri uri = ContentUris.withAppendedId(BookEntry.CONTENT_URI, idColumnIndex);
+                if (quantityColumnIndex == 0) {
+                    Toast.makeText(context, R.string.no_quantity_left, Toast.LENGTH_SHORT).show();
 
-                int quantityDecrease = quantityColumnIndex + 1;
+                } else {
+                    int quantityDecrease = quantityColumnIndex - 1;
 
-                ContentValues values = new ContentValues();
-                values.put(BookEntry.COLUMN_QUANTITY, quantityDecrease);
+                    ContentValues values = new ContentValues();
+                    values.put(BookEntry.COLUMN_QUANTITY, quantityDecrease);
 
-                context.getContentResolver().update(uri, values, null, null);
-            }
-        });
-        DecreaseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Uri uri = ContentUris.withAppendedId(BookEntry.CONTENT_URI, idColumnIndex);
-
-                int quantityDecrease = quantityColumnIndex - 1;
-
-                ContentValues values = new ContentValues();
-                values.put(BookEntry.COLUMN_QUANTITY, quantityDecrease);
-
-                context.getContentResolver().update(uri, values, null, null);
+                    context.getContentResolver().update(uri, values, null, null);
+                }
 
             }
         });
+
     }
 }

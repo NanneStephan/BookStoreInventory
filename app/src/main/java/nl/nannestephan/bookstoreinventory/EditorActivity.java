@@ -20,6 +20,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -33,6 +34,7 @@ public class EditorActivity extends AppCompatActivity implements
      * Identifier for the pet data loader
      */
     private static final int EXISTING_BOOK_LOADER = 0;
+
 
     private Button resupplyButton;
 
@@ -50,7 +52,8 @@ public class EditorActivity extends AppCompatActivity implements
 
     private EditText mSupplierPhoneEditText;
 
-    private EditText mQuantityEditText;
+    private TextView mQuantityEditText;
+
 
     /**
      * Boolean flag that keeps track of whether the pet has been edited (true) or not (false)
@@ -70,6 +73,7 @@ public class EditorActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_editor);
 
+
         resupplyButton = findViewById(R.id.resupply);
 
         // Examine the intent that was used to launch this activity,
@@ -78,19 +82,19 @@ public class EditorActivity extends AppCompatActivity implements
         mCurrentBookUri = intent.getData();
 
         if (mCurrentBookUri == null) {
-            // This is a new pet, so change the app bar to say "Add a Pet"
+            // This is a new book, so change the app bar to say "Add a Book"
             setTitle(getString(R.string.editor_activity_title_new_book));
 
             // Invalidate the options menu, so the "Delete" menu option can be hidden.
             // (It doesn't make sense to delete a pet that hasn't been created yet.)
             invalidateOptionsMenu();
         } else {
-            // Otherwise this is an existing pet, so change app bar to say "Edit Pet"
+            // Otherwise this is an existing book, so change app bar to say "Edit Book"
             setTitle(getString(R.string.editor_activity_title_edit_book));
             resupplyButton.setVisibility(View.VISIBLE);
 
 
-            // Initialize a loader to read the pet data from the database
+            // Initialize a loader to read the book data from the database
             // and display the current values in the editor
             getLoaderManager().initLoader(EXISTING_BOOK_LOADER, null, this);
         }
@@ -127,48 +131,49 @@ public class EditorActivity extends AppCompatActivity implements
         String phoneNumberString = mSupplierPhoneEditText.getText().toString().trim();
         String quantityString = mQuantityEditText.getText().toString().trim();
 
-        // Check if this is supposed to be a new pet
+        // Check if this is supposed to be a new book
         // and check if all the fields in the editor are blank
         if (mCurrentBookUri == null &&
                 TextUtils.isEmpty(nameBookString) && TextUtils.isEmpty(nameAuthorString) &&
                 TextUtils.isEmpty(nameCategoryString) && TextUtils.isEmpty(priceNumberString)
                 && TextUtils.isEmpty(nameSuppliesString) && TextUtils.isEmpty(phoneNumberString)
                 && TextUtils.isEmpty(quantityString)) {
-            // Since no fields were modified, we can return early without creating a new pet.
+            // Since no fields were modified, we can return early without creating a new book.
             // No need to create ContentValues and no need to do any ContentProvider operations.
             return;
         }
-        if (TextUtils.isEmpty(nameBookString)){
-            Toast.makeText(this, getString(R.string.no_name), Toast.LENGTH_SHORT ).show();
+        if (TextUtils.isEmpty(nameBookString)) {
+            Toast.makeText(this, getString(R.string.no_name), Toast.LENGTH_SHORT).show();
             return;
         }
-        if (TextUtils.isEmpty(nameAuthorString)){
-            Toast.makeText(this, getString(R.string.no_author), Toast.LENGTH_SHORT ).show();
+        if (TextUtils.isEmpty(nameAuthorString)) {
+            Toast.makeText(this, getString(R.string.no_author), Toast.LENGTH_SHORT).show();
             return;
         }
-        if (TextUtils.isEmpty(nameCategoryString)){
-            Toast.makeText(this, getString(R.string.no_category), Toast.LENGTH_SHORT ).show();
+        if (TextUtils.isEmpty(nameCategoryString)) {
+            Toast.makeText(this, getString(R.string.no_category), Toast.LENGTH_SHORT).show();
             return;
         }
-        if (TextUtils.isEmpty(priceNumberString)){
-            Toast.makeText(this, getString(R.string.no_price), Toast.LENGTH_SHORT ).show();
+        if (TextUtils.isEmpty(priceNumberString)) {
+            Toast.makeText(this, getString(R.string.no_price), Toast.LENGTH_SHORT).show();
             return;
         }
-        if (TextUtils.isEmpty(nameSuppliesString)){
-            Toast.makeText(this, getString(R.string.no_supply_name), Toast.LENGTH_SHORT ).show();
+        if (TextUtils.isEmpty(nameSuppliesString)) {
+            Toast.makeText(this, getString(R.string.no_supply_name), Toast.LENGTH_SHORT).show();
             return;
         }
-        if (TextUtils.isEmpty(phoneNumberString)){
-            Toast.makeText(this, getString(R.string.no_supply_phone), Toast.LENGTH_SHORT ).show();
+        if (TextUtils.isEmpty(phoneNumberString)) {
+            Toast.makeText(this, getString(R.string.no_supply_phone), Toast.LENGTH_SHORT).show();
             return;
         }
-        if (TextUtils.isEmpty(quantityString)){
-            Toast.makeText(this, getString(R.string.no_quantity), Toast.LENGTH_SHORT ).show();
+        if (TextUtils.isEmpty(quantityString)) {
+            Toast.makeText(this, getString(R.string.no_quantity), Toast.LENGTH_SHORT).show();
             return;
         }
 
+
         // Create a ContentValues object where column names are the keys,
-        // and pet attributes from the editor are the values.
+        // and book attributes from the editor are the values.
         ContentValues values = new ContentValues();
         values.put(BookEntry.COLUMN_BOOK_NAME, nameBookString);
         values.put(BookEntry.COLUMN_BOOK_AUTHOR, nameAuthorString);
@@ -195,7 +200,7 @@ public class EditorActivity extends AppCompatActivity implements
                         Toast.LENGTH_SHORT).show();
             }
         } else {
-            // Otherwise this is an EXISTING pet, so update the pet with content URI: mCurrentPetUri
+            // Otherwise this is an EXISTING book, so update the book with content URI: mCurrentPetUri
             // and pass in the new ContentValues. Pass in null for the selection and selection args
             // because mCurrentPetUri will already identify the correct row in the database that
             // we want to modify.
@@ -241,7 +246,7 @@ public class EditorActivity extends AppCompatActivity implements
         builder.setNegativeButton(R.string.keep_editing, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // User clicked the "Keep editing" button, so dismiss the dialog
-                // and continue editing the pet.
+                // and continue editing the book.
                 if (dialog != null) {
                     dialog.dismiss();
                 }
@@ -261,7 +266,7 @@ public class EditorActivity extends AppCompatActivity implements
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-        // If this is a new pet, hide the "Delete" menu item.
+        // If this is a new book, hide the "Delete" menu item.
         if (mCurrentBookUri == null) {
             MenuItem menuItem = menu.findItem(R.id.action_delete);
             menuItem.setVisible(false);
@@ -269,15 +274,14 @@ public class EditorActivity extends AppCompatActivity implements
         return true;
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // User clicked on a menu option in the app bar overflow menu
         switch (item.getItemId()) {
             // Respond to a click on the "Save" menu option
             case R.id.action_save:
-                // Save pet to database
                 insertBook();
-                // Exit activity
                 finish();
                 return true;
             // Respond to a click on the "Delete" menu option
@@ -286,7 +290,7 @@ public class EditorActivity extends AppCompatActivity implements
                 return true;
             // Respond to a click on the "Up" arrow button in the app bar
             case android.R.id.home:
-                // If the pet hasn't changed, continue with navigating up to parent activity
+                // If the book hasn't changed, continue with navigating up to parent activity
                 // which is the {@link CatalogActivity}.
                 if (!mBookHasChanged) {
                     NavUtils.navigateUpFromSameTask(EditorActivity.this);
@@ -316,7 +320,7 @@ public class EditorActivity extends AppCompatActivity implements
      */
     @Override
     public void onBackPressed() {
-        // If the pet hasn't changed, continue with handling back button press
+        // If the book hasn't changed, continue with handling back button press
         if (!mBookHasChanged) {
             super.onBackPressed();
             return;
@@ -339,7 +343,7 @@ public class EditorActivity extends AppCompatActivity implements
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         // Since the editor shows all pet attributes, define a projection that contains
-        // all columns from the pet table
+        // all columns from the book table
         String[] projection = {
                 BookEntry._ID,
                 BookEntry.COLUMN_BOOK_NAME,
@@ -368,7 +372,7 @@ public class EditorActivity extends AppCompatActivity implements
         // Proceed with moving to the first row of the cursor and reading data from it
         // (This should be the only row in the cursor)
         if (cursor.moveToFirst()) {
-            // Find the columns of pet attributes that we're interested in
+            // Find the columns of book attributes that we're interested in
             int nameColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_NAME);
             int authorColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_AUTHOR);
             int categoryColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_CATEGORY);
@@ -416,6 +420,7 @@ public class EditorActivity extends AppCompatActivity implements
         mSupplierEditText.setText("");
         mSupplierPhoneEditText.setText("");
     }
+
     /**
      * Prompt the user to confirm that they want to delete this pet.
      */
@@ -426,14 +431,14 @@ public class EditorActivity extends AppCompatActivity implements
         builder.setMessage(R.string.delete_dialog_msg);
         builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                // User clicked the "Delete" button, so delete the pet.
+                // User clicked the "Delete" button, so delete the book.
                 deletePet();
             }
         });
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // User clicked the "Cancel" button, so dismiss the dialog
-                // and continue editing the pet.
+                // and continue editing the book.
                 if (dialog != null) {
                     dialog.dismiss();
                 }

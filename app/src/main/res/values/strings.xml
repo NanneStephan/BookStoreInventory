@@ -49,45 +49,33 @@
     <string name="editor_update_book_failed">Error with updating Book</string>
     <string name="editor_insert_Book_successful">Book saved</string>
     <string name="editor_insert_Book_failed">Error with saving Book</string>
+    <string name="editor_delete_book_successful">Book deleted</string>
+    <string name="editor_delete_book_failed">Error with deleting book</string>
 
     <!-- Empty Check Toasts Strings -->
-    <string name="no_name">Book Name is Missing</string>
-    <string name="no_author">Author is Missing</string>
-    <string name="no_category">Category is Missing</string>
-    <string name="no_price">Price is Missing</string>
-    <string name="no_supply_name">Supplier is Missing</string>
-    <string name="no_supply_phone">Phone number is Missing</string>
-    <string name="no_quantity">Quantity is Missing</string>
+    <string name="no_name">Did not Save Book Name is Missing</string>
+    <string name="no_author">Did not Save Author is Missing</string>
+    <string name="no_category">Did not Save Category is Missing</string>
+    <string name="no_price">Did not Save Price is Missing</string>
+    <string name="no_supply_name">Did not Save Supplier is Missing</string>
+    <string name="no_supply_phone">Did not Save Phone number is Missing</string>
+    <string name="no_quantity">Did not Save Quantity is Missing</string>
 
-    <!-- Title text for the empty view, which describes the empty dog house image [CHAR LIMIT=50] -->
+    <!--Count button -->
+    <string name="no_quantity_left">This Book is out of Inventory</string>
+
+
+   <!-- Empty state -->
     <string name="empty_view_title_text">It\'s a bit empty here...</string>
-
-    <!-- Subtitle text for the empty view that prompts the user to add a pet [CHAR LIMIT=50] -->
     <string name="empty_view_subtitle_text">Get started by adding a book</string>
 
     <string name="discard">Discard</string>
-
-    <!-- Dialog button text for the option to keep editing the current pet [CHAR LIMIT=20] -->
     <string name="keep_editing">Keep Editing</string>
 
-    <!-- Toast message in editor when current pet was successfully deleted [CHAR LIMIT=NONE] -->
-    <string name="editor_delete_pet_successful">Pet deleted</string>
-
-    <!-- Dialog message when user is leaving editor but hasn't saved changes [CHAR LIMIT=NONE] -->
     <string name="unsaved_changes_dialog_msg">Discard your changes and quit editing?</string>
 
-    <!-- Toast message in editor when current pet was successfully deleted [CHAR LIMIT=NONE] -->
-    <string name="editor_delete_book_successful">Pet deleted</string>
-
-    <!-- Toast message in editor when current pet has failed to be deleted [CHAR LIMIT=NONE] -->
-    <string name="editor_delete_book_failed">Error with deleting pet</string>
-
-    <!-- Dialog message to ask the user to confirm deleting the current pet [CHAR LIMIT=NONE] -->
-    <string name="delete_dialog_msg">Delete this pet?</string>
-
-    <!-- Dialog button text for the option to confirm deleting the current pet [CHAR LIMIT=20] -->
+    <string name="delete_dialog_msg">Delete this book?</string>
     <string name="delete">Delete</string>
 
-    <!-- Dialog button text for the option to cancel deletion of the current pet [CHAR LIMIT=20] -->
     <string name="cancel">Cancel</string>
 </resources>

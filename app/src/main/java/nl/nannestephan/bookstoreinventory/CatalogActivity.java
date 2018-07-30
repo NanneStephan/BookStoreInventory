@@ -1,10 +1,12 @@
 package nl.nannestephan.bookstoreinventory;
 
 
+import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
@@ -43,7 +45,7 @@ public class CatalogActivity extends AppCompatActivity implements
             }
         });
 
-        // Find the ListView which will be populated with the pet data
+        // Find the ListView which will be populated with the BookInventory data
         ListView bookListView = findViewById(R.id.list);
 
         // Find and set empty view on the ListView, so that it only shows when the list has 0 items.
@@ -62,14 +64,14 @@ public class CatalogActivity extends AppCompatActivity implements
                 // Form the content URI that represents the specific pet that was clicked on,
                 // by appending the "id" (passed as input to this method) onto the
                 // {@link PetEntry#CONTENT_URI}.
-                // For example, the URI would be "content://com.example.android.pets/pets/2"
+                // For example, the URI would be "content://nl.nannestephan.bookstoreinventory.bookstoreinvetory/books/2"
                 // if the pet with ID 2 was clicked on.
                 Uri currentPetUri = ContentUris.withAppendedId(BookEntry.CONTENT_URI, id);
 
                 // Set the URI on the data field of the intent
                 intent.setData(currentPetUri);
 
-                // Launch the {@link EditorActivity} to display the data for the current pet.
+                // Launch the {@link EditorActivity} to display the data for the current book.
                 startActivity(intent);
             }
         });
@@ -94,8 +96,36 @@ public class CatalogActivity extends AppCompatActivity implements
     }
 
     private void deleteAllBooks() {
-        int rowsDeleted = getContentResolver().delete(BookEntry.CONTENT_URI, null, null);
-        Log.v("CatalogActivity", rowsDeleted + " rows deleted from the Database");
+        showDeleteConfirmationDialog();
+    }
+
+    /**
+     * Prompt the user to confirm that they want to delete this pet.
+     */
+    private void showDeleteConfirmationDialog() {
+        // Create an AlertDialog.Builder and set the message
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.delete_dialog_msg);
+        builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked the "Delete" button, so delete the book.
+                int rowsDeleted = getContentResolver().delete(BookEntry.CONTENT_URI, null, null);
+                Log.v("CatalogActivity", rowsDeleted + " rows deleted from the Database");
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked the "Cancel" button, so dismiss the dialog
+                // and continue editing the book.
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+            }
+        });
+
+        // Create and show the AlertDialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     @Override
