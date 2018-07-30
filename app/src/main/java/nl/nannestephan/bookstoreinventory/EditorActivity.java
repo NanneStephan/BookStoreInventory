@@ -54,7 +54,7 @@ public class EditorActivity extends AppCompatActivity implements
 
     private TextView mQuantityEditText;
 
-
+    boolean check;
     /**
      * Boolean flag that keeps track of whether the pet has been edited (true) or not (false)
      */
@@ -143,35 +143,40 @@ public class EditorActivity extends AppCompatActivity implements
             return;
         }
         if (TextUtils.isEmpty(nameBookString)) {
+            check = false;
             Toast.makeText(this, getString(R.string.no_name), Toast.LENGTH_SHORT).show();
             return;
         }
         if (TextUtils.isEmpty(nameAuthorString)) {
+            check = false;
             Toast.makeText(this, getString(R.string.no_author), Toast.LENGTH_SHORT).show();
             return;
         }
         if (TextUtils.isEmpty(nameCategoryString)) {
+            check = false;
             Toast.makeText(this, getString(R.string.no_category), Toast.LENGTH_SHORT).show();
             return;
         }
         if (TextUtils.isEmpty(priceNumberString)) {
+            check = false;
             Toast.makeText(this, getString(R.string.no_price), Toast.LENGTH_SHORT).show();
             return;
         }
         if (TextUtils.isEmpty(nameSuppliesString)) {
+            check = false;
             Toast.makeText(this, getString(R.string.no_supply_name), Toast.LENGTH_SHORT).show();
             return;
         }
         if (TextUtils.isEmpty(phoneNumberString)) {
+            check = false;
             Toast.makeText(this, getString(R.string.no_supply_phone), Toast.LENGTH_SHORT).show();
             return;
         }
         if (TextUtils.isEmpty(quantityString)) {
+            check = false;
             Toast.makeText(this, getString(R.string.no_quantity), Toast.LENGTH_SHORT).show();
             return;
         }
-
-
         // Create a ContentValues object where column names are the keys,
         // and book attributes from the editor are the values.
         ContentValues values = new ContentValues();
@@ -218,6 +223,7 @@ public class EditorActivity extends AppCompatActivity implements
                         Toast.LENGTH_SHORT).show();
             }
         }
+
     }
 
 
@@ -252,7 +258,6 @@ public class EditorActivity extends AppCompatActivity implements
                 }
             }
         });
-
         // Create and show the AlertDialog
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
