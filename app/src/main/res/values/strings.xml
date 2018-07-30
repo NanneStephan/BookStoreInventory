@@ -65,7 +65,7 @@
     <string name="no_quantity_left">This Book is out of Inventory</string>
 
 
-   <!-- Empty state -->
+    <!-- Empty state -->
     <string name="empty_view_title_text">It\'s a bit empty here...</string>
     <string name="empty_view_subtitle_text">Get started by adding a book</string>
 

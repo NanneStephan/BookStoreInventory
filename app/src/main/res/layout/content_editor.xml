@@ -107,6 +107,7 @@
 
         </RelativeLayout>
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/supplier"
         android:layout_width="match_parent"
@@ -135,9 +136,9 @@
             <EditText
                 android:id="@+id/edit_supplier"
                 style="@style/EditorFieldStyle"
+                android:layout_below="@id/edit_supplier_phone"
                 android:hint="@string/hint_supplier"
-                android:inputType="textCapWords"
-                android:layout_below="@id/edit_supplier_phone"/>
+                android:inputType="textCapWords" />
 
         </RelativeLayout>
     </LinearLayout>
@@ -146,8 +147,8 @@
         android:id="@+id/resupply"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/Resupply"
         android:layout_margin="10dp"
         android:background="@drawable/resupply_button"
-        android:visibility="gone"/>
+        android:text="@string/Resupply"
+        android:visibility="gone" />
 </LinearLayout>

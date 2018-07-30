@@ -77,7 +77,7 @@ public class CatalogActivity extends AppCompatActivity implements
         });
 
         getLoaderManager().initLoader(BOOK_LOADER, null, this);
-        }
+    }
 
 
     //Dummy insert
@@ -155,7 +155,7 @@ public class CatalogActivity extends AppCompatActivity implements
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-    // Define a projection that specifies the columns from the table we care about.
+        // Define a projection that specifies the columns from the table we care about.
         String[] projection = {
                 BookEntry._ID,
                 BookEntry.COLUMN_BOOK_NAME,

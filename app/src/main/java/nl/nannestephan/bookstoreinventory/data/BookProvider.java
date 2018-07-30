@@ -93,6 +93,7 @@ public class BookProvider extends ContentProvider {
                 throw new IllegalArgumentException("Insertion is not supported for " + uri);
         }
     }
+
     /**
      * Insert a pet into the database with the given content values. Return the new content URI
      * for that specific row in the database.
@@ -227,6 +228,7 @@ public class BookProvider extends ContentProvider {
         // Return the number of rows updated
         return rowsUpdated;
     }
+
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
         // Get writeable database
