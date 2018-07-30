@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import nl.nannestephan.bookstoreinventory.data.BookContract.BookEntry;
 
+import static nl.nannestephan.bookstoreinventory.data.BookContract.BookEntry.TABLE_NAME;
+
 public class BookDbHelper extends SQLiteOpenHelper {
 
     public static final String LOG_TAG = BookDbHelper.class.getSimpleName();
@@ -25,7 +27,7 @@ public class BookDbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase BookDatabase){
         //the String for the SQLite input to create the Table
-        String SQL_CREATE_BOOKS_TABLE = "CREATE TABLE " + BookEntry.TABLE_NAME + " ("
+        String SQL_CREATE_BOOKS_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
                 + BookEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + BookEntry.COLUMN_BOOK_NAME + " TEXT NOT NULL, "
                 + BookEntry.COLUMN_BOOK_AUTHOR + " TEXT NOT NULL, "
@@ -42,6 +44,12 @@ public class BookDbHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase BookDatabase, int oldVersion, int newVersion){
         // Nothing here yet I think it's for the next lesson :P
+
+        // Drop older table if existed
+        BookDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+
+        // Create tables again
+        onCreate(BookDatabase);
     }
 
 }
