@@ -19,13 +19,13 @@ public class BookDbHelper extends SQLiteOpenHelper {
     private final static int DATABASE_VERSION = 2;
 
 
-    public BookDbHelper(Context context){
+    public BookDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     //Creating the SQL table
     @Override
-    public void onCreate(SQLiteDatabase BookDatabase){
+    public void onCreate(SQLiteDatabase BookDatabase) {
         //the String for the SQLite input to create the Table
         String SQL_CREATE_BOOKS_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
                 + BookEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -40,11 +40,10 @@ public class BookDbHelper extends SQLiteOpenHelper {
         BookDatabase.execSQL(SQL_CREATE_BOOKS_TABLE);
 
     }
+
     // This is going to Upgrade the BooksDataBase
     @Override
-    public void onUpgrade(SQLiteDatabase BookDatabase, int oldVersion, int newVersion){
-        // Nothing here yet I think it's for the next lesson :P
-
+    public void onUpgrade(SQLiteDatabase BookDatabase, int oldVersion, int newVersion) {
         // Drop older table if existed
         BookDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
 
