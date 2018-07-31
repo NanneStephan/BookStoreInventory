@@ -447,8 +447,6 @@ public class EditorActivity extends AppCompatActivity implements
             });
         }
     }
-
-
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         // If the loader is invalidated, clear out all the data from the input fields.
@@ -459,7 +457,6 @@ public class EditorActivity extends AppCompatActivity implements
         mSupplierEditText.setText("");
         mSupplierPhoneEditText.setText("");
     }
-
     /**
      * Prompt the user to confirm that they want to delete this pet.
      */
