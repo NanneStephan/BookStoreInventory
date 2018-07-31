@@ -91,8 +91,8 @@ public class BookCursorAdapter extends CursorAdapter {
             @Override
             public void onClick(View v) {
                 Uri uri = ContentUris.withAppendedId(BookEntry.CONTENT_URI, idColumnIndex);
-                if (quantityColumnIndex == 0) {
-                    Toast.makeText(context, R.string.no_quantity_left, Toast.LENGTH_SHORT).show();
+                if (quantityColumnIndex == 0) {Toast.makeText(context, R.string.no_quantity_left, Toast.LENGTH_SHORT).show();
+
 
                 } else {
                     int quantityDecrease = quantityColumnIndex - 1;

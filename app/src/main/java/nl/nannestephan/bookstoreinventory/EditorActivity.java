@@ -35,6 +35,8 @@ public class EditorActivity extends AppCompatActivity implements
      */
     private static final int EXISTING_BOOK_LOADER = 0;
 
+    Button Increment;
+    Button Decrement;
 
     private Button resupplyButton;
 
@@ -54,7 +56,7 @@ public class EditorActivity extends AppCompatActivity implements
 
     private TextView mQuantityEditText;
 
-    boolean check;
+    boolean check = true;
     /**
      * Boolean flag that keeps track of whether the pet has been edited (true) or not (false)
      */
@@ -73,7 +75,8 @@ public class EditorActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_editor);
 
-
+        Increment = findViewById(R.id.increment);
+        Decrement = findViewById(R.id.decrement);
         resupplyButton = findViewById(R.id.resupply);
 
         // Examine the intent that was used to launch this activity,
@@ -118,6 +121,17 @@ public class EditorActivity extends AppCompatActivity implements
         mSupplierEditText.setOnTouchListener(mTouchListener);
         mSupplierPhoneEditText.setOnTouchListener(mTouchListener);
 
+        Increment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        Decrement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
 
     }
 
@@ -170,11 +184,6 @@ public class EditorActivity extends AppCompatActivity implements
         if (TextUtils.isEmpty(phoneNumberString)) {
             check = false;
             Toast.makeText(this, getString(R.string.no_supply_phone), Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (TextUtils.isEmpty(quantityString)) {
-            check = false;
-            Toast.makeText(this, getString(R.string.no_quantity), Toast.LENGTH_SHORT).show();
             return;
         }
         // Create a ContentValues object where column names are the keys,
@@ -262,8 +271,6 @@ public class EditorActivity extends AppCompatActivity implements
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
-
-
     /**
      * This method is called after invalidateOptionsMenu(), so that the
      * menu can be updated (some menu items can be hidden or made visible).
@@ -287,7 +294,10 @@ public class EditorActivity extends AppCompatActivity implements
             // Respond to a click on the "Save" menu option
             case R.id.action_save:
                 insertBook();
-                finish();
+                if (check) {
+                    finish();
+                    return true;
+                }
                 return true;
             // Respond to a click on the "Delete" menu option
             case R.id.action_delete:
@@ -368,7 +378,7 @@ public class EditorActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+    public void onLoadFinished(final Loader<Cursor> loader, Cursor cursor) {
         // Bail early if the cursor is null or there is less than 1 row in the cursor
         if (cursor == null || cursor.getCount() < 1) {
             return;
@@ -378,11 +388,12 @@ public class EditorActivity extends AppCompatActivity implements
         // (This should be the only row in the cursor)
         if (cursor.moveToFirst()) {
             // Find the columns of book attributes that we're interested in
+            final int idColumnIndex = cursor.getInt(cursor.getColumnIndex(BookEntry._ID));
             int nameColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_NAME);
             int authorColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_AUTHOR);
             int categoryColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_CATEGORY);
             int priceColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_PRICE_BOOK);
-            int quantityColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_QUANTITY);
+            final int quantityColumnIndex = cursor.getInt(cursor.getColumnIndex(BookEntry.COLUMN_QUANTITY));
             int phoneSupplierColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_SUPPLIER_PHONE);
             int nameSupplierColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_SUPPLIER_NAME);
 
@@ -393,7 +404,6 @@ public class EditorActivity extends AppCompatActivity implements
             String nameSupplier = cursor.getString(nameSupplierColumnIndex);
             int price = cursor.getInt(priceColumnIndex);
             final int phone = cursor.getInt(phoneSupplierColumnIndex);
-            int quantity = cursor.getInt(quantityColumnIndex);
 
             // Update the views on the screen with the values from the database
             mBookNameEditText.setText(name);
@@ -402,7 +412,7 @@ public class EditorActivity extends AppCompatActivity implements
             mSupplierEditText.setText(nameSupplier);
             mPriceNameEditText.setText(Integer.toString(price));
             mSupplierPhoneEditText.setText(Integer.toString(phone));
-            mQuantityEditText.setText(Integer.toString(quantity));
+            mQuantityEditText.setText(String.valueOf(quantityColumnIndex));
 
             //resupplyButton
             resupplyButton.setOnClickListener(new View.OnClickListener() {
@@ -412,8 +422,32 @@ public class EditorActivity extends AppCompatActivity implements
                     startActivity(intent);
                 }
             });
+            Increment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String incrementString = mQuantityEditText.getText().toString();
+                    int increment;
+                    increment = Integer.parseInt(incrementString);
+                    mQuantityEditText.setText(String.valueOf(increment + 1));
+                }
+
+            });
+            Decrement.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String decrementString = mQuantityEditText.getText().toString();
+                    int decrement;
+                    if (decrementString.isEmpty()|| decrementString.equals("0")) {
+                        Toast.makeText(EditorActivity.this, R.string.no_quantity_left, Toast.LENGTH_SHORT).show();
+                    } else {
+                        decrement = Integer.parseInt(decrementString);
+                        mQuantityEditText.setText(String.valueOf(decrement - 1));
+                    }
+                }
+            });
         }
     }
+
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
